@@ -1,0 +1,1 @@
+### Simple logger bundle for Symfony

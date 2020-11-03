@@ -1,0 +1,14 @@
+{
+    "name": "andrewlynx/anylogger",
+    "description": "ANY-LOGGER",
+    "type": "library",
+    "require": {
+        "php": "^7.1",
+        "ext-json": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Andrewlynx\\AnyLogger\\": "Resourses"
+        }
+    }
+}
