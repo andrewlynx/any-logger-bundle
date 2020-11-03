@@ -1,7 +1,7 @@
 {
     "name": "andrewlynx/anylogger",
-    "description": "ANY-LOGGER",
-    "type": "library",
+    "description": "Simple Symfony logger bundle",
+    "type": "symfony-bundle",
     "require": {
         "php": "^7.1",
         "ext-json": "*"
