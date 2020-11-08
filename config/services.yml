@@ -1,0 +1,8 @@
+services:
+  andrewlynx.any_logger:
+    class: 'Andrewlynx\Bundle\AnyLogger\AnyLogger'
+    autoconfigure: true
+    autowire: true
+    public: true
+    arguments:
+      - '@service_container'

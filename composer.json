@@ -1,5 +1,5 @@
 {
-    "name": "andrewlynx/anylogger-bundle",
+    "name": "andrewlynx/any-logger-bundle",
     "description": "Simple Symfony logger bundle",
     "type": "symfony-bundle",
     "require": {
