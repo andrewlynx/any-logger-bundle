@@ -2,7 +2,7 @@
 
 namespace Andrewlynx\Bundle\DependencyInjection;
 
-use Andrewlynx\Bundle\Constant\AnyLogger;
+use Andrewlynx\Bundle\Constant\AnyLoggerConstant;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -17,13 +17,13 @@ class Configuration implements ConfigurationInterface
 
         $treeBuilder->getRootNode()
             ->children()
-                ->enumNode(AnyLogger::FILENAME)
-                    ->values([AnyLogger::NAME_DATE, AnyLogger::NAME_EVENT, AnyLogger::NAME_DATE_EVENT])
-                    ->defaultValue(AnyLogger::NAME_DATE)
+                ->enumNode(AnyLoggerConstant::FILENAME)
+                    ->values([AnyLoggerConstant::NAME_DATE, AnyLoggerConstant::NAME_EVENT, AnyLoggerConstant::NAME_DATE_EVENT])
+                    ->defaultValue(AnyLoggerConstant::NAME_DATE)
                 ->end()
-                ->scalarNode(AnyLogger::PERMISSIONS_VIEW)
+                ->scalarNode(AnyLoggerConstant::PERMISSIONS_VIEW)
                 ->end()
-                ->scalarNode(AnyLogger::PERMISSIONS_REMOVE)
+                ->scalarNode(AnyLoggerConstant::PERMISSIONS_REMOVE)
                 ->end()
             ->end()
         ;

@@ -2,6 +2,8 @@
 
 namespace Andrewlynx\Bundle\DependencyInjection;
 
+use Andrewlynx\Bundle\Constant\AnyLoggerConstant;
+use Andrewlynx\Bundle\AnyLogger\AnyLogger;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
@@ -20,8 +22,17 @@ class AnyLoggerExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $container->setParameter('andrewlynx.any_logger.filename', $config['filename'] ?? null);
-        $container->setParameter('andrewlynx.any_logger.view_permissions', $config['view_permissions'] ?? null);
-        $container->setParameter('andrewlynx.any_logger.remove_permissions', $config['remove_permissions'] ?? null);
+        $container->setParameter(
+            AnyLogger::getParamName(AnyLoggerConstant::FILENAME),
+            $config[AnyLoggerConstant::FILENAME] ?? null
+        );
+        $container->setParameter(
+            AnyLogger::getParamName(AnyLoggerConstant::PERMISSIONS_VIEW),
+            $config[AnyLoggerConstant::PERMISSIONS_VIEW] ?? null
+        );
+        $container->setParameter(
+            AnyLogger::getParamName(AnyLoggerConstant::PERMISSIONS_REMOVE),
+            $config[AnyLoggerConstant::PERMISSIONS_REMOVE] ?? null
+        );
     }
 }

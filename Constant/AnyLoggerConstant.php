@@ -2,7 +2,7 @@
 
 namespace Andrewlynx\Bundle\Constant;
 
-class AnyLogger
+class AnyLoggerConstant
 {
     public const FILENAME = 'filename';
 
@@ -14,4 +14,8 @@ class AnyLogger
     public const PERMISSIONS_REMOVE = 'remove_permissions';
 
     public const APP_NAME = 'andrewlynx.any_logger';
+
+    public const FIELD_DATE = 'date';
+    public const FIELD_EVENT = 'event';
+    public const FIELD_DATA = 'data';
 }

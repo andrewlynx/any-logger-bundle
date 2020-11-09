@@ -2,7 +2,7 @@
 
 namespace Andrewlynx\Bundle\AnyLogger;
 
-use Andrewlynx\Bundle\Constant\AnyLogger as AnyLoggerConstant;
+use Andrewlynx\Bundle\Constant\AnyLoggerConstant;
 use DateTime;
 use Exception;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -32,20 +32,55 @@ class AnyLogger
     /**
      * @param string $event
      * @param $data
-     *
-     * @throws Exception
      */
     public function log(string $event, $data): void
     {
         try {
-            file_put_contents($this->getFileName($event), json_encode([
-                    'date' => (new DateTime())->format('Y-m-d H:i:s'),
-                    'event' => $event,
-                    'data' => $data,
-                ]).PHP_EOL, FILE_APPEND);
-        } catch (Throwable $th) {
-            error_log($th->getMessage());
+            file_put_contents(
+                $this->getFileName($event),
+                json_encode([
+                    AnyLoggerConstant::FIELD_DATE => (new DateTime())->format('Y-m-d H:i:s'),
+                    AnyLoggerConstant::FIELD_EVENT => $event,
+                    AnyLoggerConstant::FIELD_DATA => $data,
+                ]).PHP_EOL, FILE_APPEND
+            );
+        } catch (Throwable $throwable) {
+            error_log($throwable->getMessage());
         }
+    }
+
+    /**
+     * @param string $event
+     * @param Throwable $throwable
+     */
+    public function logException(string $event, Throwable $throwable): void
+    {
+        try {
+            file_put_contents(
+                $this->getFileName($event),
+                json_encode([
+                    AnyLoggerConstant::FIELD_DATE => (new DateTime())->format('Y-m-d H:i:s'),
+                    AnyLoggerConstant::FIELD_EVENT => $event,
+                    AnyLoggerConstant::FIELD_DATA => [
+                        'exception_class' => get_class($throwable),
+                        'exception_message' => $throwable->getMessage(),
+                        'exception_trace' => $throwable->getTraceAsString(),
+                    ],
+                ]) . PHP_EOL, FILE_APPEND
+            );
+        } catch (Throwable $throwable) {
+            error_log($throwable->getMessage());
+        }
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return string
+     */
+    public static function getParamName(string $name): string
+    {
+        return AnyLoggerConstant::APP_NAME.'.'.$name;
     }
 
     /**
@@ -69,15 +104,5 @@ class AnyLogger
         }
 
         return $this->folder.'/'.$filename.'.log';
-    }
-
-    /**
-     * @param string $name
-     *
-     * @return string
-     */
-    private function getParamName(string $name): string
-    {
-        return AnyLoggerConstant::APP_NAME.'.'.$name;
     }
 }
