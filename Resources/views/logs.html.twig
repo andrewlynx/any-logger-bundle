@@ -1,0 +1,28 @@
+<table class="table" width="100%">
+    <thead align="left">
+        <tr>
+            <th>Name</th>
+            <th>Size</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for log in result %}
+        <tr>
+            <td>
+                <a href="{{ path('any_logger_view', {'name': log.name}) }}" target="_blank">{{ log.name }}</a>
+            </td>
+            <td>
+                {{ log.size }}
+            </td>
+            <td>
+                Remove button
+            </td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="10">No records found</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

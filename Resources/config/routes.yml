@@ -1,0 +1,3 @@
+Andrewlynx\Bundle\Controller\AnyLoggerController:
+  resource: ../../Controller/
+  type: annotation

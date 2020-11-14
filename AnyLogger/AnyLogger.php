@@ -37,7 +37,7 @@ class AnyLogger
     {
         try {
             file_put_contents(
-                $this->getFileName($event),
+                $this->createFileName($event),
                 json_encode([
                     AnyLoggerConstant::FIELD_DATE => (new DateTime())->format('Y-m-d H:i:s'),
                     AnyLoggerConstant::FIELD_EVENT => $event,
@@ -57,7 +57,7 @@ class AnyLogger
     {
         try {
             file_put_contents(
-                $this->getFileName($event),
+                $this->createFileName($event),
                 json_encode([
                     AnyLoggerConstant::FIELD_DATE => (new DateTime())->format('Y-m-d H:i:s'),
                     AnyLoggerConstant::FIELD_EVENT => $event,
@@ -84,13 +84,23 @@ class AnyLogger
     }
 
     /**
+     * @param string $name
+     *
+     * @return string
+     */
+    public static function getFileName(string $name): string
+    {
+        return AnyLoggerConstant::FILE_PREFIX.$name.AnyLoggerConstant::FILE_EXTENSION;
+    }
+
+    /**
      * @param string $event
      *
      * @return string
      *
      * @throws Exception
      */
-    private function getFileName(string $event): string
+    private function createFileName(string $event): string
     {
         switch ($this->fileName) {
             case AnyLoggerConstant::NAME_DATE:
@@ -103,6 +113,6 @@ class AnyLogger
                 $filename = $event;
         }
 
-        return $this->folder.'/'.$filename.'.log';
+        return $this->folder.'/'.$this->getFileName($filename);
     }
 }
