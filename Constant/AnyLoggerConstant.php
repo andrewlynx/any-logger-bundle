@@ -5,6 +5,8 @@ namespace Andrewlynx\Bundle\Constant;
 class AnyLoggerConstant
 {
     public const FILENAME = 'filename';
+    public const FILE_PREFIX = 'log-';
+    public const FILE_EXTENSION = '.log';
 
     public const NAME_DATE = 'date';
     public const NAME_EVENT = 'event';
