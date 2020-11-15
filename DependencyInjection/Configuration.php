@@ -21,10 +21,8 @@ class Configuration implements ConfigurationInterface
                     ->values([AnyLoggerConstant::NAME_DATE, AnyLoggerConstant::NAME_EVENT, AnyLoggerConstant::NAME_DATE_EVENT])
                     ->defaultValue(AnyLoggerConstant::NAME_DATE)
                 ->end()
-                ->scalarNode(AnyLoggerConstant::PERMISSIONS_VIEW)
-                ->end()
-                ->scalarNode(AnyLoggerConstant::PERMISSIONS_REMOVE)
-                ->end()
+                ->integerNode(AnyLoggerConstant::PARSE_JSON_SIZE_LIMIT)
+                    ->defaultValue(AnyLoggerConstant::DEFAULT_PARSE_JSON_SIZE_LIMIT)
             ->end()
         ;
 

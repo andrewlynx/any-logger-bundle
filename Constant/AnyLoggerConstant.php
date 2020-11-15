@@ -12,8 +12,8 @@ class AnyLoggerConstant
     public const NAME_EVENT = 'event';
     public const NAME_DATE_EVENT = 'date-event';
 
-    public const PERMISSIONS_VIEW = 'view_permissions';
-    public const PERMISSIONS_REMOVE = 'remove_permissions';
+    public const PARSE_JSON_SIZE_LIMIT = 'parse_json_size_limit';
+    public const DEFAULT_PARSE_JSON_SIZE_LIMIT = 20*1024; // parse files with size only < 20MB
 
     public const APP_NAME = 'andrewlynx.any_logger';
 

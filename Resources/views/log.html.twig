@@ -1,0 +1,34 @@
+<table class="table" width="100%">
+    <thead align="left">
+        <tr>
+            <th>Date</th>
+            <th>Event</th>
+            <th>Data</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for record in result %}
+        <tr>
+            <td>
+                {{ record.date }}
+            </td>
+            <td>
+                {{ record.event }}
+            </td>
+            <td>
+                {% if record.data is iterable %}
+                    {% for line in record.data %}
+                        {{ line }} <br>
+                    {% endfor %}
+                {% else %}
+                    {{ record.data }}
+                {% endif %}
+            </td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="10">No records found</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

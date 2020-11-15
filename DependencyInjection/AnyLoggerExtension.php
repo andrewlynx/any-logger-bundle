@@ -24,15 +24,11 @@ class AnyLoggerExtension extends Extension
 
         $container->setParameter(
             AnyLogger::getParamName(AnyLoggerConstant::FILENAME),
-            $config[AnyLoggerConstant::FILENAME] ?? null
+            $config[AnyLoggerConstant::FILENAME] ?? AnyLoggerConstant::FIELD_EVENT
         );
         $container->setParameter(
-            AnyLogger::getParamName(AnyLoggerConstant::PERMISSIONS_VIEW),
-            $config[AnyLoggerConstant::PERMISSIONS_VIEW] ?? null
-        );
-        $container->setParameter(
-            AnyLogger::getParamName(AnyLoggerConstant::PERMISSIONS_REMOVE),
-            $config[AnyLoggerConstant::PERMISSIONS_REMOVE] ?? null
+            AnyLogger::getParamName(AnyLoggerConstant::PARSE_JSON_SIZE_LIMIT),
+            $config[AnyLoggerConstant::PARSE_JSON_SIZE_LIMIT] ?? AnyLoggerConstant::DEFAULT_PARSE_JSON_SIZE_LIMIT
         );
     }
 }

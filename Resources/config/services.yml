@@ -6,3 +6,10 @@ services:
 
   Andrewlynx\Bundle\Controller\AnyLoggerController:
     public: true
+    autoconfigure: true
+
+  Andrewlynx\Bundle\Service\:
+    resource: '../../Service'
+    autowire: true
+    autoconfigure: true
+
