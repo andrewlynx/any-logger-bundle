@@ -126,7 +126,7 @@ class AnyLoggerController extends AbstractController
 
     /**
      * @param int $sizeInBytes
-     * 
+     *
      * @return int
      */
     private function getFileSizeInKb(int $sizeInBytes): int
@@ -148,6 +148,7 @@ class AnyLoggerController extends AbstractController
 
     /**
      * @param string $logName
+     *
      * @return string
      */
     private function getLogName(string $logName): string
