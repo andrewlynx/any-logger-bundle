@@ -6,8 +6,6 @@ interface FileReaderInterface
 {
     /**
      * @param resource $stream
-     *
-     * @return string|null
      */
-    public function readRecord($stream): ?string;
+    public function readRecord($stream): void;
 }

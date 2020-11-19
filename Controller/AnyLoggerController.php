@@ -7,6 +7,7 @@ use Andrewlynx\Bundle\Constant\AnyLoggerConstant;
 use Andrewlynx\Bundle\Service\LogReaderService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -75,24 +76,10 @@ class AnyLoggerController extends AbstractController
         // Prevent parsing large files that may cause "Out Of Memory" error
         if ($fileSize > $this->container->getParameter(AnyLogger::getParamName('parse_json_size_limit'))) {
 
-            return new Response();
-            //return StreamedResponse::create($file, Response::HTTP_OK, ['Content-Type' => 'text/html']);
+            return new BinaryFileResponse($fileName);
         } else {
-            return StreamedResponse::create($logReader->read($fileName), Response::HTTP_OK, ['Content-Type' => 'text/html']);
-            /*$formatted = [];
-            while(!feof($file))  {
-                $record = fgets($file);
-                if ($record !== false) {
-                    $formatted[] = json_decode($record, true);
-                }
-            }
 
-            return $this->render(
-                '@AnyLogger/log.html.twig',
-                [
-                    'result' => $formatted,
-                ]
-            );*/
+            return StreamedResponse::create($logReader->read($fileName), Response::HTTP_OK, ['Content-Type' => 'text/html']);
         }
     }
 
