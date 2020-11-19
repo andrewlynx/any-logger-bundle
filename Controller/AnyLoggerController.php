@@ -5,9 +5,14 @@ namespace Andrewlynx\Bundle\Controller;
 use Andrewlynx\Bundle\AnyLogger\AnyLogger;
 use Andrewlynx\Bundle\Constant\AnyLoggerConstant;
 use Andrewlynx\Bundle\Service\LogReaderService;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -37,9 +42,11 @@ class AnyLoggerController extends AbstractController
         $result = [];
 
         foreach ($finder as $file) {
+            $logName = $this->getLogName($file->getFileName());
             $result[] = [
-                'name' => $this->getLogName($file->getFileName()),
+                'name' => $logName,
                 'size' => $this->getFileSizeInKb($file->getSize()).' kB',
+                'remove' => $this->generateRemoveForm($logName)->createView(),
             ];
         }
         arsort($result);
@@ -62,8 +69,7 @@ class AnyLoggerController extends AbstractController
      */
     public function view(string $name, LogReaderService $logReader): Response
     {
-        $logDir = $this->container->getParameter('kernel.logs_dir');
-        $fileName = $logDir.'/'.AnyLogger::getFileName($name);
+        $fileName =$this->getFullFileName($name);
 
         if (!file_exists($fileName)) {
             throw new NotFoundHttpException("Log for {$name} not found!");
@@ -84,6 +90,31 @@ class AnyLoggerController extends AbstractController
     }
 
     /**
+     * @Route("/delete/{name}", name="delete")
+     *
+     * @param string  $name
+     * @param Request $request
+     *
+     * @return RedirectResponse
+     *
+     * @throws Exception
+     */
+    public function delete(string $name, Request $request): RedirectResponse
+    {
+        $form = $this->generateRemoveForm($name)->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $filesystem = new Filesystem();
+            $fileName =$this->getFullFileName($name);
+
+            $filesystem->remove($fileName);
+
+            return $this->redirectToRoute('any_logger_index');
+        }
+
+        throw new Exception('You don\'t have an access to this page');
+    }
+
+    /**
      * @return string
      */
     private function getFileNameRegex(): string
@@ -95,11 +126,24 @@ class AnyLoggerController extends AbstractController
 
     /**
      * @param int $sizeInBytes
+     * 
      * @return int
      */
     private function getFileSizeInKb(int $sizeInBytes): int
     {
         return ceil($sizeInBytes / 1024);
+    }
+
+    /**
+     * @param string $fileName
+     *
+     * @return string
+     */
+    private function getFullFileName(string $fileName): string
+    {
+        $logDir = $this->container->getParameter('kernel.logs_dir');
+
+        return $logDir.'/'.AnyLogger::getFileName($fileName);
     }
 
     /**
@@ -112,5 +156,24 @@ class AnyLoggerController extends AbstractController
             AnyLoggerConstant::FILE_PREFIX,
             '',
             str_replace(AnyLoggerConstant::FILE_EXTENSION, '', $logName));
+    }
+
+    /**
+     * @param string $logName
+     *
+     * @return Form
+     */
+    private function generateRemoveForm(string $logName): Form
+    {
+        return $this->get('form.factory')
+            ->createNamed(
+                $logName,
+                'Symfony\Component\Form\Extension\Core\Type\FormType',
+                [],
+                [
+                    'action' => $this->generateUrl('any_logger_delete', ['name' => $logName]),
+                ]
+            )
+            ->add('Delete', SubmitType::class);
     }
 }
