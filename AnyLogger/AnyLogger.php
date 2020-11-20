@@ -37,7 +37,7 @@ class AnyLogger
     {
         try {
             file_put_contents(
-                $this->createFileName($event),
+                $this->createLogName($event),
                 json_encode([
                     AnyLoggerConstant::FIELD_DATE => (new DateTime())->format('Y-m-d H:i:s'),
                     AnyLoggerConstant::FIELD_EVENT => $event,
@@ -57,7 +57,7 @@ class AnyLogger
     {
         try {
             file_put_contents(
-                $this->createFileName($event),
+                $this->createLogName($event),
                 json_encode([
                     AnyLoggerConstant::FIELD_DATE => (new DateTime())->format('Y-m-d H:i:s'),
                     AnyLoggerConstant::FIELD_EVENT => $event,
@@ -100,7 +100,7 @@ class AnyLogger
      *
      * @throws Exception
      */
-    private function createFileName(string $event): string
+    private function createLogName(string $event): string
     {
         switch ($this->fileName) {
             case AnyLoggerConstant::NAME_DATE:

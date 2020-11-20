@@ -24,7 +24,7 @@ Applications that use Symfony Flex
 Open a command console, enter your project directory and execute:
 
 ```console
-$ composer require <andrewlynx.any_logger>
+$ composer require andrewlynx/any-logger-bundle
 ```
 
 Applications that don't use Symfony Flex
@@ -36,7 +36,7 @@ Open a command console, enter your project directory and execute the
 following command to download the latest stable version of this bundle:
 
 ```console
-$ composer require <andrewlynx.any_logger>
+$ composer require andrewlynx/any-logger-bundle
 ```
 
 ### Step 2: Enable the Bundle
@@ -78,4 +78,22 @@ so they should be added:
 // ...
 app_file:
     resource: '@AnyLoggerBundle/Resources/config/routes.xml'
+```
+
+### Step 5: Configure the bundle
+
+You can change some default values by adding `config/packages/any_logger.yaml` file.
+Default values are:
+
+filename: event (log files are sorted by the event name)
+
+parse_json_size_limit: 20480 (20 MB in kb)
+
+```php
+// config/packages/any_logger.yaml
+
+// ...
+any_logger:
+    filename: date-event
+    parse_json_size_limit: 30000
 ```

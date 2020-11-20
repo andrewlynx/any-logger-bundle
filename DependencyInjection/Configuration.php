@@ -23,6 +23,7 @@ class Configuration implements ConfigurationInterface
                 ->end()
                 ->integerNode(AnyLoggerConstant::PARSE_JSON_SIZE_LIMIT)
                     ->defaultValue(AnyLoggerConstant::DEFAULT_PARSE_JSON_SIZE_LIMIT)
+                ->end()
             ->end()
         ;
 
