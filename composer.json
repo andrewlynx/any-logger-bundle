@@ -1,12 +1,12 @@
 {
     "name": "andrewlynx/any-logger-bundle",
-    "description": "Simple Symfony logger bundle",
+    "description": "Simple Symfony 4.4 logger bundle",
     "type": "symfony-bundle",
     "require": {
         "php": "^7.1",
         "ext-json": "*",
         "doctrine/annotations": "^1.12@dev",
-        "symfony/form": "^4.4.*",
+        "symfony/form": "4.4.*",
         "symfony/twig-bundle": "^4.4"
     },
     "autoload": {
